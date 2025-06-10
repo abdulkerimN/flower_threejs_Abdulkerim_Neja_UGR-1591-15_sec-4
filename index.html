@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Product Viewer</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <div id="info-panel"></div>
+    <div id="container"></div>
+
+    <!-- Three.js and dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <!-- Custom scripts -->
+    <script src="scripts/initScene.js"></script>
+    <script src="scripts/createProduct.js"></script>
+    <script src="scripts/addLighting.js"></script>
+    <script src="scripts/interaction.js"></script>
+    <script src="scripts/cameraAnimation.js"></script>
+
+    <!-- Main application -->
+    <script>
+        // Initialize scene
+        const { scene, camera, renderer, controls } = initScene();
+        
+        // Create product
+        const product = createProduct();
+        scene.add(product);
+        
+        // Add lighting
+        addLighting(scene);
+        
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Update controls
+            controls.update();
+            
+            // Update camera animation
+            updateCamera(camera, controls);
+            
+            // Update interaction
+            updateInteraction(camera, scene, product);
+            
+            // Render scene
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+    </script>
+</body>
+</html> 
